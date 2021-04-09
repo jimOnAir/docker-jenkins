@@ -1,0 +1,4 @@
+*.xml
+*/*.xml
+.vscode
+dive.log

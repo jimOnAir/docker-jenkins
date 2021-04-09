@@ -1,0 +1,3 @@
+DOCKER_RUN_OPTS='--privileged'
+GOSS_SHELL='bash'
+GOSS_WAIT_OPTS="-r 60s -s 1s > /dev/null"

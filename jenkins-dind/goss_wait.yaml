@@ -1,0 +1,14 @@
+process:
+  containerd:
+    running: true
+  dockerd:
+    running: true
+  java:
+    running: true
+http:
+  http://localhost:8080:
+    status: 403
+    allow-insecure: false
+    no-follow-redirects: false
+    timeout: 120000
+    body: []

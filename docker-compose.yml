@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  jenkins:
+    image: jimonair/jenkins:2.287
+    build:
+      context: ./jenkins
+      args:
+        - JENKINS_VERSION=2.287
+        - GOSS_VERSION=0.3.9
+        # - APT_PROXY=http://172.17.0.1:3142
+
+  jenkins-dind:
+    image: jimonair/jenkins:dind-2.287
+    build:
+      context: ./jenkins-dind
+      args:
+        - JENKINS_VERSION=2.287
+        - GOSS_VERSION=0.3.9
+        # - APT_PROXY=http://172.17.0.1:3142

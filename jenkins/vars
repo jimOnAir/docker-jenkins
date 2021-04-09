@@ -1,0 +1,1 @@
+GOSS_WAIT_OPTS="-r 60s -s 1s > /dev/null"

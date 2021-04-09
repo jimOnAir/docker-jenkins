@@ -1,0 +1,140 @@
+file:
+  /usr/local/bin/dgoss:
+    exists: true
+    mode: "0755"
+    size: 4413
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /usr/local/bin/dgoss-ci:
+    exists: true
+    mode: "0755"
+    size: 4573
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+package:
+  ansible:
+    installed: true
+    versions:
+      - 2.9.19-1ppa~trusty
+  apt-transport-https:
+    installed: true
+  dive:
+    installed: true
+    versions:
+      - 0.10.0
+  docker-ce:
+    installed: true
+    versions:
+      - 5:20.10.5~3-0~debian-buster
+  gnupg2:
+    installed: true
+  jq:
+    installed: true
+  make:
+    installed: true
+  python3-pip:
+    installed: true
+  software-properties-common:
+    installed: true
+port:
+  tcp:8080:
+    listening: true
+user:
+  jenkins:
+    exists: true
+    uid: 1000
+    gid: 1000
+    groups:
+      - docker
+      - jenkins
+    home: /var/jenkins_home
+    shell: /bin/bash
+group:
+  docker:
+    exists: true
+    gid: 997
+  jenkins:
+    exists: true
+    gid: 1000
+command:
+  ansible --version:
+    exit-status: 0
+  aws --version:
+    exit-status: 0
+    stdout: []
+    stderr: []
+    timeout: 10000
+  docker-compose -v:
+    exit-status: 0
+    stdout:
+      - docker-compose version 1.29.0, build c4eb3a1f
+    stderr: []
+    timeout: 10000
+  goss -v:
+    exit-status: 0
+    stdout:
+      - goss version v0.3.9
+    stderr: []
+    timeout: 10000
+  java -jar /usr/share/jenkins/jenkins.war --version:
+    exit-status: 0
+    stdout:
+      - "2.287"
+    stderr: []
+    timeout: 10000
+  pip3 list --format=freeze | grep docker:
+    exit-status: 0
+    stdout:
+      - docker==5.0.0
+    stderr: []
+    timeout: 10000
+  which aws:
+    exit-status: 0
+    stdout:
+      - /usr/local/bin/aws
+    stderr: []
+    timeout: 10000
+  which dgoss:
+    exit-status: 0
+    stdout:
+      - /usr/local/bin/dgoss
+    stderr: []
+    timeout: 10000
+  which dgoss-ci:
+    exit-status: 0
+    stdout:
+      - /usr/local/bin/dgoss-ci
+    stderr: []
+    timeout: 10000
+  which goss:
+    exit-status: 0
+    stdout:
+      - /usr/local/bin/goss
+    stderr: []
+    timeout: 10000
+  which yq:
+    exit-status: 0
+    stdout:
+      - /usr/local/bin/yq
+    stderr: []
+    timeout: 10000
+  yq -V:
+    exit-status: 0
+    stdout:
+      - yq version 2.4.1
+    stderr: []
+    timeout: 10000
+process:
+  java:
+    running: true
+http:
+  http://127.0.0.1:8080:
+    status: 403
+    allow-insecure: false
+    no-follow-redirects: false
+    timeout: 5000
+    body: []

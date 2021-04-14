@@ -19,7 +19,7 @@ package:
   ansible:
     installed: true
     versions:
-      - 2.9.19-1ppa~trusty
+      - 2.9.20-1ppa~trusty
   apt-transport-https:
     installed: true
   dive:
@@ -29,7 +29,7 @@ package:
   docker-ce:
     installed: true
     versions:
-      - 5:20.10.5~3-0~debian-buster
+      - 5:20.10.6~3-0~debian-buster
   gnupg2:
     installed: true
   jq:
@@ -63,15 +63,10 @@ group:
 command:
   ansible --version:
     exit-status: 0
-  aws --version:
-    exit-status: 0
-    stdout: []
-    stderr: []
-    timeout: 10000
   docker-compose -v:
     exit-status: 0
     stdout:
-      - docker-compose version 1.29.0, build c4eb3a1f
+      - docker-compose version 1.29.0, build 07737305
     stderr: []
     timeout: 10000
   goss -v:
@@ -83,19 +78,13 @@ command:
   java -jar /usr/share/jenkins/jenkins.war --version:
     exit-status: 0
     stdout:
-      - "2.287"
+      - "2.288"
     stderr: []
     timeout: 10000
   pip3 list --format=freeze | grep docker:
     exit-status: 0
     stdout:
       - docker==5.0.0
-    stderr: []
-    timeout: 10000
-  which aws:
-    exit-status: 0
-    stdout:
-      - /usr/local/bin/aws
     stderr: []
     timeout: 10000
   which dgoss:

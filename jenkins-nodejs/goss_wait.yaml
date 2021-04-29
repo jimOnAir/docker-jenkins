@@ -1,0 +1,10 @@
+process:
+  java:
+    running: true
+http:
+  http://127.0.0.1:8080:
+    status: 403
+    allow-insecure: false
+    no-follow-redirects: false
+    timeout: 120000
+    body: []

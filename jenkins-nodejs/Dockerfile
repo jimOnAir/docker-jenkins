@@ -7,6 +7,9 @@ ARG DOCKER_COMPOSE_VERSION=1.29.0
 ARG DOCKER_GID=997
 ARG GOSS_VERSION=0.3.9
 ARG YQ_VERSION=2.4.1
+ARG NODE_REPO_VERSION=node_14.x
+ARG NODE_VERSION=14.16.1-1nodesource1
+ARG NPM_VERSION=6.14.12
 
 ENV \
   CASC_JENKINS_CONFIG=/var/jenkins_home/casc.yaml \
@@ -104,5 +107,32 @@ RUN set -ex; \
     chown root:root /usr/local/bin/dgoss; \
     chmod +x /usr/local/bin/dgoss; \
     chmod +x /usr/local/bin/dgoss-ci
+
+RUN set -ex; \
+  # Enable APT_PROXY if it has been specified
+ 	if [ -n "${APT_PROXY}" ];then \
+    echo "Acquire::http { Proxy \"${APT_PROXY}\"; };" > /etc/apt/apt.conf.d/01proxy; \
+  fi; \
+  # see note below about "*.pyc" files
+  export PYTHONDONTWRITEBYTECODE=1; \
+  curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -; \
+  echo "deb https://deb.nodesource.com/$NODE_REPO_VERSION $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/nodesource.list; \
+  echo "deb-src https://deb.nodesource.com/$NODE_REPO_VERSION $(lsb_release -cs) main" | tee -a /etc/apt/sources.list.d/nodesource.list; \
+  DEBIAN_FRONTEND=noninteractive apt-get update; \
+  DEBIAN_FRONTEND=noninteractive apt-get -yyq install \
+    nodejs=${NODE_VERSION} \
+    xz-utils \
+    ; \
+  DEBIAN_FRONTEND=noninteractive apt-get clean; \
+  rm -rf /var/lib/apt/lists/*; \
+  npm i npm@${NPM_VERSION} -g; \
+  npm cache clean --force;\
+  npm cache verify; \
+  # some of the steps above generate a lot of "*.pyc" files (and setting "PYTHONDONTWRITEBYTECODE" beforehand doesn't propagate properly for some reason), so we clean them up manually (as long as they aren't owned by a package)
+	find /usr -name '*.pyc' -type f -exec bash -c 'for pyc; do dpkg -S "$pyc" &> /dev/null || rm -vf "$pyc"; done' -- '{}' +; \
+  # disable APT_PROXY if it has been specified
+ 	if [ -n "${APT_PROXY}" ];then \
+    rm /etc/apt/apt.conf.d/01proxy; \
+  fi
 
 USER jenkins

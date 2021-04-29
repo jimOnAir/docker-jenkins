@@ -30,6 +30,8 @@ package:
     installed: true
     versions:
       - 5:20.10.6~3-0~debian-buster
+  nodejs:
+    installed: true
   gnupg2:
     installed: true
   jq:
@@ -118,14 +120,10 @@ command:
     stderr: []
     timeout: 10000
 process:
-  containerd:
-    running: true
-  dockerd:
-    running: true
   java:
     running: true
 http:
-  http://localhost:8080:
+  http://127.0.0.1:8080:
     status: 403
     allow-insecure: false
     no-follow-redirects: false

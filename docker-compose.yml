@@ -1,21 +1,31 @@
 version: "3.7"
 services:
   jenkins:
-    image: jimonair/jenkins:2.288
+    image: jimonair/jenkins:2.290
     build:
       context: ./jenkins
       args:
-        - JENKINS_VERSION=2.288
+        - JENKINS_VERSION=2.290
+        - GOSS_VERSION=0.3.9
+        - DOCKER_COMPOSE_VERSION=1.29.0
+        # - APT_PROXY=http://172.17.0.1:3142
+
+  jenkins-nodejs:
+    image: jimonair/jenkins:2.290-nodejs
+    build:
+      context: ./jenkins-nodejs
+      args:
+        - JENKINS_VERSION=2.290
         - GOSS_VERSION=0.3.9
         - DOCKER_COMPOSE_VERSION=1.29.0
         # - APT_PROXY=http://172.17.0.1:3142
 
   jenkins-dind:
-    image: jimonair/jenkins:dind-2.288
+    image: jimonair/jenkins:dind-2.290
     build:
       context: ./jenkins-dind
       args:
-        - JENKINS_VERSION=2.288
+        - JENKINS_VERSION=2.290
         - GOSS_VERSION=0.3.9
         - DOCKER_COMPOSE_VERSION=1.29.0
         # - APT_PROXY=http://172.17.0.1:3142

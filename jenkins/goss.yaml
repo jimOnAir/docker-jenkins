@@ -78,7 +78,7 @@ command:
   java -jar /usr/share/jenkins/jenkins.war --version:
     exit-status: 0
     stdout:
-      - "2.288"
+      - "2.290"
     stderr: []
     timeout: 10000
   pip3 list --format=freeze | grep docker:
